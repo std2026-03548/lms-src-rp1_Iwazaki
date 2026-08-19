@@ -147,4 +147,59 @@ public class AttendanceUtil {
 		return false;
 	}
 
+	/**
+	 * 時間のプルダウンマップを生成
+	 * @author	岩崎剛史 - Task.26
+	 * @return	LinkedHashMap<Integer, String>
+	 */
+	public LinkedHashMap<Integer, String> getHourMap() {
+		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+		map.put(null, "");
+		for (int i = 0; i < 24; i++) {
+			map.put(i, String.format("%02d",i));
+		}
+		return map;
+	}
+
+	/**
+	 * 分のプルダウンマップを生成
+	 * @author	岩崎剛史 - Task.26
+	 * @return	LinkedHashMap<Integer, String>
+	 */
+	public LinkedHashMap<Integer, String> getMinuteMap() {
+		LinkedHashMap<Integer, String> map = new LinkedHashMap<>();
+		map.put(null, "");
+		for (int i = 0; i < 60; i++) {
+			map.put(i, String.format("%02d",i));
+		}
+		return map;
+	}
+	
+	/**
+	 * 時間(時)の切り出し
+	 * @author	岩崎剛史 - Task.26
+	 * @param	開始時刻or終了時刻	String
+	 * @return	出退勤時間(時間)	Integer
+	 */
+	public Integer getHour(String trainingTime) {
+		Integer trainingTimeHour = null;
+		if (trainingTime != null && !trainingTime.isBlank()) {
+			trainingTimeHour = Integer.parseInt(trainingTime.substring(0, 2));
+		}
+		return trainingTimeHour;
+	}
+	
+	/**
+	 * 時間(分)の切り出し
+	 * @author	岩崎剛史 - Task.26
+	 * @param	開始時刻or終了時刻	String
+	 * @return	出退勤時間(分)		Integer
+	 */
+	public Integer getMinute(String trainingTime) {
+		Integer trainingTimeMunite = null;
+		if (trainingTime != null && !trainingTime.isBlank()) {
+			trainingTimeMunite = Integer.parseInt(trainingTime.substring(3, 5));
+		}
+		return trainingTimeMunite;
+	}
 }

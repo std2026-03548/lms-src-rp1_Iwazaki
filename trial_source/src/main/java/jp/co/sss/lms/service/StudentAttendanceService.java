@@ -220,6 +220,11 @@ public class StudentAttendanceService {
 		attendanceForm.setUserName(loginUserDto.getUserName());
 		attendanceForm.setLeaveFlg(loginUserDto.getLeaveFlg());
 		attendanceForm.setBlankTimes(attendanceUtil.setBlankTime());
+		//岩崎剛史 - Task.26 add-S
+		//時間・分のプルダウン作成
+		attendanceForm.setTrainingTimeHours(attendanceUtil.getHourMap());
+		attendanceForm.setTrainingTimeMinutes(attendanceUtil.getMinuteMap());
+		//岩崎剛史 - Task.26 add-E
 
 		// 途中退校している場合のみ設定
 		if (loginUserDto.getLeaveDate() != null) {
@@ -251,6 +256,12 @@ public class StudentAttendanceService {
 			dailyAttendanceForm.setDispTrainingDate(dateUtil
 					.dateToString(attendanceManagementDto.getTrainingDate(), "yyyy年M月d日(E)"));
 			dailyAttendanceForm.setStatusDispName(attendanceManagementDto.getStatusDispName());
+			//岩崎剛史 - Task.26 add-S
+			dailyAttendanceForm.setTrainingStartTimeHour(attendanceUtil.getHour(attendanceManagementDto.getTrainingStartTime()));
+			dailyAttendanceForm.setTrainingStartTimeMinute(attendanceUtil.getMinute(attendanceManagementDto.getTrainingStartTime()));
+			dailyAttendanceForm.setTrainingEndTimeHour(attendanceUtil.getHour(attendanceManagementDto.getTrainingEndTime()));
+			dailyAttendanceForm.setTrainingEndTimeMinute(attendanceUtil.getMinute(attendanceManagementDto.getTrainingEndTime()));
+			//岩崎剛史 - Task.26 add-E
 
 			attendanceForm.getAttendanceList().add(dailyAttendanceForm);
 		}
@@ -338,7 +349,6 @@ public class StudentAttendanceService {
 	/**
 	 * 勤怠情報（受講生入力）未入力件数取得
 	 * @author	岩崎剛史 - Task.25 
-	 * @param	lmsUserId		LMSユーザID
 	 * @return	[未入力日が0より大きい場合]:true,そうでない場合はfalseを戻す。
 	 */
 	public boolean notEnterCheck() throws ParseException {
@@ -353,5 +363,33 @@ public class StudentAttendanceService {
 		}
 		return hasNotEnter;
 	}
-	
+
+	/**
+	 * 入力された出退勤の{時間}{分}をhh:mm形式に変換し、AttendanceFormにセットする
+	 * @author	岩崎剛史 - Task.26 
+	 * @param	AttendanceForm
+	 */
+	public void formatConversion(AttendanceForm attendanceForm) {
+		Integer trainingStartTimeHour;
+		Integer trainingStartTimeMinute;
+		Integer trainingEndTimeHour;
+		Integer trainingEndTimeMinute;
+		for (DailyAttendanceForm dailyAttendanceForm : attendanceForm.getAttendanceList()) {
+			trainingStartTimeHour = dailyAttendanceForm.getTrainingStartTimeHour();
+			trainingStartTimeMinute = dailyAttendanceForm.getTrainingStartTimeMinute();
+			trainingEndTimeHour = dailyAttendanceForm.getTrainingEndTimeHour();
+			trainingEndTimeMinute = dailyAttendanceForm.getTrainingEndTimeMinute();
+			if (trainingStartTimeHour != null && trainingStartTimeMinute != null) {
+				dailyAttendanceForm.setTrainingStartTime(String.format("%02d",trainingStartTimeHour) + ":" + String.format("%02d",trainingStartTimeMinute));
+			} else {
+				dailyAttendanceForm.setTrainingStartTime("");
+			}
+
+			if (trainingEndTimeHour != null && trainingEndTimeMinute != null) {
+				dailyAttendanceForm.setTrainingEndTime(String.format("%02d",trainingEndTimeHour) + ":" + String.format("%02d",trainingEndTimeMinute));
+			} else {
+				dailyAttendanceForm.setTrainingEndTime("");
+			}
+		}
+	}
 }

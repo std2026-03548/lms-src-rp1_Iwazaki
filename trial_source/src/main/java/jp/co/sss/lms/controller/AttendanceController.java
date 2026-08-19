@@ -138,6 +138,11 @@ public class AttendanceController {
 	public String complete(AttendanceForm attendanceForm, Model model, BindingResult result)
 			throws ParseException {
 
+		//岩崎剛史 - Task.26 add-S
+		//出勤・退勤時刻をhh:mm形式で設定
+		studentAttendanceService.formatConversion(attendanceForm);
+		//岩崎剛史 - Task.26 add-E
+		
 		// 更新
 		String message = studentAttendanceService.update(attendanceForm);
 		model.addAttribute("message", message);

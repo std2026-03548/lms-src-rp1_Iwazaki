@@ -31,5 +31,11 @@ public class AttendanceForm {
 	private LinkedHashMap<Integer, String> blankTimes;
 	/** 日次の勤怠フォームリスト */
 	private List<DailyAttendanceForm> attendanceList;
-
+	
+	//岩崎剛史 - Task.26 add-S
+	/** 時間(時)(プルダウン) */
+	private LinkedHashMap<Integer, String> trainingTimeHours;
+	/** 時間(分)(プルダウン) */
+	private LinkedHashMap<Integer, String> trainingTimeMinutes;
+	//岩崎剛史 - Task.26 add-E
 }
