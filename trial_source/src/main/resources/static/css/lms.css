@@ -1704,3 +1704,15 @@ html, body {
 	float: left;
 	width: 50%;
 }
+
+/* 岩崎剛史 Task29 add-S */
+thead.scrollable{
+	display: block;
+}
+tbody.scrollable{
+	display: block;
+	overflow-y: scroll;
+	height: 560px;
+}
+/* 岩崎剛史 Task29 add-E */
+
