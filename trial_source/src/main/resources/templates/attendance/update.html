@@ -37,15 +37,13 @@
 							-->
 							<th class="w140">コース内容</th>
 							<!-- 岩崎剛史 Task.28 add-S -->
-							<!--
 							<th class="w60"></th>
-							-->
 							<!-- 岩崎剛史 Task.28 add-E -->
 							<th class="w180" colspan="3">出勤</th>
 							<th class="w180" colspan="3">退勤</th>
 							<th class="w100">中抜け時間</th>
 							<th class="w70">ステータス</th>
-							<th class="w100">備考</th>
+							<th class="w140">備考</th>
 							<!-- 岩崎剛史 Task.26 mod-E -->
 						</tr>
 					</thead>
@@ -75,16 +73,14 @@
 								-->
 								<td class="w140">[[${dailyAttendanceForm.sectionName}]]</td>
 								<!-- 岩崎剛史 Task.28 add-S -->
-								<!--
 								<td class="w60">
-									<input type="button" value="定時" class="btnRegularHours"></input>
+									<input type="button" value="定時" class="btn btn-success"></input>
 								</td>
-								-->
 								<!-- 岩崎剛史 Task.28 add-E -->
 								<td class="w70">
 									<select th:name="|attendanceList[${stat.index}].trainingStartTimeHour|" class="form-control">
 										<option th:each="trainingStartTimeHour : ${attendanceForm.trainingTimeHours}"
-											th:value="${trainingStartTimeHour.key}" th:inlne="text"  class="form-control"
+											th:value="${trainingStartTimeHour.key}" th:inline="text"  class="form-control"
 											th:selected="${trainingStartTimeHour.key == dailyAttendanceForm.trainingStartTimeHour}">
 											[[${trainingStartTimeHour.value}]]
 										</option>
@@ -94,7 +90,7 @@
 								<td class="w70">
 									<select th:name="|attendanceList[${stat.index}].trainingStartTimeMinute|" class="form-control">
 										<option th:each="trainingStartTimeMinute : ${attendanceForm.trainingTimeMinutes}"
-											th:value="${trainingStartTimeMinute.key}" th:inlne="text"  class="form-control"
+											th:value="${trainingStartTimeMinute.key}" th:inline="text"  class="form-control"
 											th:selected="${trainingStartTimeMinute.key == dailyAttendanceForm.trainingStartTimeMinute}">
 											[[${trainingStartTimeMinute.value}]]
 										</option>
@@ -103,7 +99,7 @@
 								<td class="w70">
 									<select th:name="|attendanceList[${stat.index}].trainingEndTimeHour|" class="form-control">
 										<option th:each="trainingEndTimeHour : ${attendanceForm.trainingTimeHours}"
-											th:value="${trainingEndTimeHour.key}" th:inlne="text"  class="form-control"
+											th:value="${trainingEndTimeHour.key}" th:inline="text"  class="form-control"
 											th:selected="${trainingEndTimeHour.key == dailyAttendanceForm.trainingEndTimeHour}">
 											[[${trainingEndTimeHour.value}]]
 										</option>
@@ -113,7 +109,7 @@
 								<td class="w70">
 									<select th:name="|attendanceList[${stat.index}].trainingEndTimeMinute|" class="form-control">
 										<option th:each="trainingEndTimeMinute : ${attendanceForm.trainingTimeMinutes}"
-											th:value="${trainingEndTimeMinute.key}" th:inlne="text"  class="form-control"
+											th:value="${trainingEndTimeMinute.key}" th:inline="text"  class="form-control"
 											th:selected="${trainingEndTimeMinute.key == dailyAttendanceForm.trainingEndTimeMinute}">
 											[[${trainingEndTimeMinute.value}]]
 										</option>
@@ -127,7 +123,7 @@
 									</select>
 								</td>
 								<td class="w70">[[${dailyAttendanceForm.statusDispName}]]</td>
-								<td class="w240">
+								<td class="w140">
 									<input type="text" th:name="|attendanceList[${stat.index}].note|" th:value="${dailyAttendanceForm.note}" class="form-control"></input>
 								</td>
 							</tr>
@@ -150,17 +146,22 @@
 	</div>
 
 	<!-- 岩崎剛史 Task.28 add-S -->
-	<!--
 	<script type="text/javascript" th:inline="javascript">
-		var btnRegularHours = document.getElementById('btnRegularHours');
-		btnRegularHours.addEventListener('click',function(){
-			debugger;
-			var hour = document.querySelector('[name="attendanceList[0].trainingStartTimeHour"]');
-			hour.selectedIndex = 0;
-			//alert("クリック");
+		var buttons = document.querySelectorAll(".btn-success");
+		buttons.forEach(function(btn){
+			btn.addEventListener("click",function(){
+				var row = btn.closest("tr");
+				var startHour = row.querySelector('select[name$=".trainingStartTimeHour"]');
+				var startMinute = row.querySelector('select[name$=".trainingStartTimeMinute"]');
+				var endHour = row.querySelector('select[name$=".trainingEndTimeHour"]');
+				var endMinute = row.querySelector('select[name$=".trainingEndTimeMinute"]');
+				startHour.selectedIndex = 10;
+				startMinute.selectedIndex = 1;
+				endHour.selectedIndex = 19;
+				endMinute.selectedIndex = 1;
+			});
 		});
 	</script>
-	-->
 	<!-- 岩崎剛史 Task.28 add-E -->
 	
 </body>
